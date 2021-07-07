@@ -4,7 +4,7 @@
         "Read more about it at https://getcomposer.org/doc/01-basic-usage.md#installing-dependencies",
         "This file is @generated automatically"
     ],
-    "content-hash": "54bf09905cb51af1bb8887c35da1f7ed",
+    "content-hash": "252238e038c094d1a61b38966a2175fc",
     "packages": [
         {
             "name": "2amigos/yii2-ckeditor-widget",
@@ -3434,6 +3434,108 @@
             "time": "2020-11-13T09:40:50+00:00"
         },
         {
+            "name": "npm-asset/bootstrap",
+            "version": "4.6.0",
+            "dist": {
+                "type": "tar",
+                "url": "https://registry.npmjs.org/bootstrap/-/bootstrap-4.6.0.tgz",
+                "shasum": "97b9f29ac98f98dfa43bf7468262d84392552fd7"
+            },
+            "type": "npm-asset-library",
+            "extra": {
+                "npm-asset-bugs": {
+                    "url": "https://github.com/twbs/bootstrap/issues"
+                },
+                "npm-asset-main": "dist/js/bootstrap.js",
+                "npm-asset-directories": [],
+                "npm-asset-repository": {
+                    "type": "git",
+                    "url": "git+https://github.com/twbs/bootstrap.git"
+                },
+                "npm-asset-scripts": {
+                    "start": "npm-run-all --parallel watch docs-serve",
+                    "bundlewatch": "bundlewatch --config .bundlewatch.config.json",
+                    "css": "npm-run-all css-compile css-prefix css-minify",
+                    "css-compile": "node-sass --output-style expanded --source-map true --source-map-contents true --precision 6 scss/ -o dist/css/",
+                    "css-lint": "npm-run-all --continue-on-error --parallel css-lint-*",
+                    "css-lint-stylelint": "stylelint \"**/*.{css,scss}\" --cache --cache-location .cache/.stylelintcache --rd",
+                    "css-lint-vars": "fusv scss/ site/assets/scss/",
+                    "css-minify": "cleancss -O1 --format breakWith=lf --source-map --source-map-inline-sources --output dist/css/bootstrap.min.css dist/css/bootstrap.css && cleancss -O1 --format breakWith=lf --source-map --source-map-inline-sources --output dist/css/bootstrap-grid.min.css dist/css/bootstrap-grid.css && cleancss -O1 --format breakWith=lf --source-map --source-map-inline-sources --output dist/css/bootstrap-reboot.min.css dist/css/bootstrap-reboot.css",
+                    "css-prefix": "npm-run-all --parallel css-prefix-*",
+                    "css-prefix-main": "postcss --config build/postcss.config.js --replace \"dist/css/*.css\" \"!dist/css/*.min.css\"",
+                    "css-prefix-examples": "postcss --config build/postcss.config.js --replace \"site/content/**/*.css\"",
+                    "js": "npm-run-all js-compile js-minify",
+                    "js-compile": "npm-run-all --parallel js-compile-*",
+                    "js-compile-standalone": "rollup --environment BUNDLE:false --config build/rollup.config.js --sourcemap",
+                    "js-compile-bundle": "rollup --environment BUNDLE:true --config build/rollup.config.js --sourcemap",
+                    "js-compile-plugins": "node build/build-plugins.js",
+                    "js-compile-plugins-coverage": "cross-env NODE_ENV=test node build/build-plugins.js",
+                    "js-lint": "eslint --cache --cache-location .cache/.eslintcache --report-unused-disable-directives .",
+                    "js-minify": "npm-run-all --parallel js-minify-*",
+                    "js-minify-standalone": "terser --compress typeofs=false --mangle --comments \"/^!/\" --source-map \"content=dist/js/bootstrap.js.map,includeSources,url=bootstrap.min.js.map\" --output dist/js/bootstrap.min.js dist/js/bootstrap.js",
+                    "js-minify-bundle": "terser --compress typeofs=false --mangle --comments \"/^!/\" --source-map \"content=dist/js/bootstrap.bundle.js.map,includeSources,url=bootstrap.bundle.min.js.map\" --output dist/js/bootstrap.bundle.min.js dist/js/bootstrap.bundle.js",
+                    "js-test": "npm-run-all --parallel js-test-karma* --serial js-test-integration",
+                    "js-test-karma": "karma start js/tests/karma.conf.js",
+                    "js-test-karma-old": "cross-env USE_OLD_JQUERY=true npm run js-test-karma",
+                    "js-test-karma-bundle": "cross-env BUNDLE=true npm run js-test-karma",
+                    "js-test-karma-bundle-old": "cross-env BUNDLE=true USE_OLD_JQUERY=true npm run js-test-karma",
+                    "js-test-integration": "rollup --config js/tests/integration/rollup.bundle.js",
+                    "js-test-cloud": "cross-env BROWSERSTACK=true npm run js-test-karma",
+                    "lint": "npm-run-all --parallel js-lint css-lint lockfile-lint",
+                    "docs": "npm-run-all docs-build docs-lint",
+                    "docs-build": "hugo --cleanDestinationDir",
+                    "docs-compile": "npm run docs-build",
+                    "docs-linkinator": "linkinator _gh_pages --recurse --silent --skip \"^(?!http://localhost)\"",
+                    "docs-vnu": "node build/vnu-jar.js",
+                    "docs-lint": "npm-run-all --parallel docs-vnu docs-linkinator",
+                    "docs-serve": "hugo server --port 9001 --disableFastRender",
+                    "docs-serve-only": "npx sirv-cli _gh_pages --port 9001",
+                    "lockfile-lint": "lockfile-lint --allowed-hosts npm --allowed-schemes https: --empty-hostname false --type npm --path package-lock.json",
+                    "update-deps": "ncu -u -x \"jquery,karma-browserstack-launcher,sinon,terser\" && npm update && echo Manually update site/assets/js/vendor",
+                    "release": "npm-run-all dist release-sri docs-build release-zip*",
+                    "release-sri": "node build/generate-sri.js",
+                    "release-version": "node build/change-version.js",
+                    "release-zip": "cross-env-shell \"rm -rf bootstrap-$npm_package_version-dist && cp -r dist/ bootstrap-$npm_package_version-dist && zip -r9 bootstrap-$npm_package_version-dist.zip bootstrap-$npm_package_version-dist && rm -rf bootstrap-$npm_package_version-dist\"",
+                    "release-zip-examples": "node build/zip-examples.js",
+                    "dist": "npm-run-all --parallel css js",
+                    "test": "npm-run-all lint dist js-test docs-build docs-lint",
+                    "netlify": "cross-env-shell HUGO_BASEURL=$DEPLOY_PRIME_URL npm-run-all dist release-sri docs-build",
+                    "watch": "npm-run-all --parallel watch-*",
+                    "watch-css-main": "nodemon --watch scss/ --ext scss --exec \"npm-run-all css-lint css-compile css-prefix\"",
+                    "watch-css-docs": "nodemon --watch site/assets/scss/ --ext scss --exec \"npm run css-lint\"",
+                    "watch-js-main": "nodemon --watch js/src/ --ext js --exec \"npm-run-all js-lint js-compile\"",
+                    "watch-js-docs": "nodemon --watch site/assets/js/ --ext js --exec \"npm run js-lint\""
+                },
+                "npm-asset-config": {
+                    "version_short": "4.6"
+                }
+            },
+            "license": [
+                "MIT"
+            ],
+            "authors": [
+                {
+                    "name": "The Bootstrap Authors",
+                    "url": "https://github.com/twbs/bootstrap/graphs/contributors"
+                },
+                {
+                    "name": "Twitter, Inc."
+                }
+            ],
+            "description": "The most popular front-end framework for developing responsive, mobile first projects on the web.",
+            "homepage": "https://getbootstrap.com/",
+            "keywords": [
+                "css",
+                "framework",
+                "front-end",
+                "mobile-first",
+                "responsive",
+                "sass",
+                "web"
+            ],
+            "time": "2021-01-19T16:20:07+00:00"
+        },
+        {
             "name": "paragonie/random_compat",
             "version": "v9.99.100",
             "source": {
@@ -4232,6 +4334,99 @@
                 }
             ],
             "time": "2021-04-18T14:44:04+00:00"
+        },
+        {
+            "name": "yiisoft/yii2-bootstrap4",
+            "version": "2.0.10",
+            "source": {
+                "type": "git",
+                "url": "https://github.com/yiisoft/yii2-bootstrap4.git",
+                "reference": "e6d0e58f43d3910129d554ac183aac17f65be639"
+            },
+            "dist": {
+                "type": "zip",
+                "url": "https://api.github.com/repos/yiisoft/yii2-bootstrap4/zipball/e6d0e58f43d3910129d554ac183aac17f65be639",
+                "reference": "e6d0e58f43d3910129d554ac183aac17f65be639",
+                "shasum": ""
+            },
+            "require": {
+                "npm-asset/bootstrap": "^4.3",
+                "yiisoft/yii2": "~2.0"
+            },
+            "require-dev": {
+                "cweagans/composer-patches": "^1.7",
+                "phpunit/phpunit": "4.8.34",
+                "yiisoft/yii2-coding-standards": "~2.0"
+            },
+            "type": "yii2-extension",
+            "extra": {
+                "branch-alias": {
+                    "dev-master": "1.0.x-dev"
+                },
+                "patches": {
+                    "phpunit/phpunit-mock-objects": {
+                        "Fix PHP 7 and 8 compatibility": "https://yiisoft.github.io/phpunit-patches/phpunit_mock_objects.patch"
+                    },
+                    "phpunit/phpunit": {
+                        "Fix PHP 7 compatibility": "https://yiisoft.github.io/phpunit-patches/phpunit_php7.patch",
+                        "Fix PHP 8 compatibility": "https://yiisoft.github.io/phpunit-patches/phpunit_php8.patch"
+                    }
+                }
+            },
+            "autoload": {
+                "psr-4": {
+                    "yii\\bootstrap4\\": "src"
+                }
+            },
+            "notification-url": "https://packagist.org/downloads/",
+            "license": [
+                "BSD-3-Clause"
+            ],
+            "authors": [
+                {
+                    "name": "Qiang Xue",
+                    "email": "qiang.xue@gmail.com",
+                    "homepage": "http://www.yiiframework.com/"
+                },
+                {
+                    "name": "Alexander Makarov",
+                    "email": "sam@rmcreative.ru",
+                    "homepage": "http://rmcreative.ru/"
+                },
+                {
+                    "name": "Antonio Ramirez",
+                    "email": "amigo.cobos@gmail.com"
+                },
+                {
+                    "name": "Paul Klimov",
+                    "email": "klimov.paul@gmail.com"
+                },
+                {
+                    "name": "Simon Karlen",
+                    "email": "simi.albi@outlook.com"
+                }
+            ],
+            "description": "The Twitter Bootstrap extension for the Yii framework",
+            "keywords": [
+                "bootstrap",
+                "bootstrap4",
+                "yii2"
+            ],
+            "funding": [
+                {
+                    "url": "https://github.com/yiisoft",
+                    "type": "github"
+                },
+                {
+                    "url": "https://opencollective.com/yiisoft",
+                    "type": "open_collective"
+                },
+                {
+                    "url": "https://tidelift.com/funding/github/packagist/yiisoft/yii2-bootstrap4",
+                    "type": "tidelift"
+                }
+            ],
+            "time": "2021-05-05T21:56:41+00:00"
         },
         {
             "name": "yiisoft/yii2-composer",

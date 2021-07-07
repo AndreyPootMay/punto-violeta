@@ -5,6 +5,7 @@ $db = require(__DIR__ . '/db.php');
 
 $config = [
     'id' => 'practical-b',
+    'name' => Yii::t('app', 'Punto violeta'),
     'basePath' => dirname(__DIR__),
     'bootstrap' => ['log'],
     'components' => [
