@@ -57,12 +57,13 @@ class SiteController extends Controller
 
     /**
      * Displays homepage.
-     *
      * @return string
      */
     public function actionIndex()
     {
-        $safetyPlaces = SafetyPlaces::findAll(['active' => 1]);
+        $safetyPlaces = SafetyPlaces::findAll([
+            'active' => 1
+        ]);
 
         return $this->render('index', [
             'safetyPlaces' => $safetyPlaces
