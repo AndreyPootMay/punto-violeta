@@ -21,9 +21,10 @@ $this->title = 'Inicio';
                             <p class="card-text"><b>Dirección: </b> <?= $safetyPlace->address ?></p>
                             <p class="card-text"><b>Detalles: </b> <?= $safetyPlace->details ?></p>
                             <?= Html::a('<i class="fa fa-map-marker"></i> ' . Yii::t('app', 'Ir para allá'), [
-                                '/request/create', 'safety-place' => $safetyPlace->id
+                                '/requests/create',
+                                'safety_place_id' => $safetyPlace->id
                             ], [
-                                'class' => 'btn btn-primary',
+                                'class' => 'btn btn-primary goto-button',
                                 'data' => ['confirm' => Yii::t('app', '¿Decide mandar una alerta de llegada a este punto de seguridad?')]
                             ]) ?>
                         </div>

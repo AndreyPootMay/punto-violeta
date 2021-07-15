@@ -37,7 +37,10 @@ class Requests extends \yii\db\ActiveRecord
     public function rules()
     {
         return [
-            [['safety_place_id', 'user_id', 'full_name', 'age_old', 'folio', 'lat', 'long', 'details'], 'required'],
+            [
+                [
+                    'safety_place_id', 'user_id', 'full_name', 'age_old', 'lat', 'long', 'details'
+                ], 'required'],
             [['safety_place_id', 'user_id', 'cancelled', 'active'], 'integer'],
             [['details'], 'string'],
             [['createdAt', 'updatedAt'], 'safe'],
@@ -55,18 +58,18 @@ class Requests extends \yii\db\ActiveRecord
     {
         return [
             'id' => Yii::t('app', 'ID'),
-            'safety_place_id' => Yii::t('app', 'Safety Place ID'),
-            'user_id' => Yii::t('app', 'User ID'),
-            'full_name' => Yii::t('app', 'Full Name'),
-            'age_old' => Yii::t('app', 'Age Old'),
+            'safety_place_id' => Yii::t('app', 'Punto rosa'),
+            'user_id' => Yii::t('app', 'Usuario'),
+            'full_name' => Yii::t('app', 'Nombre completo'),
+            'age_old' => Yii::t('app', 'Edad'),
             'folio' => Yii::t('app', 'Folio'),
             'lat' => Yii::t('app', 'Lat'),
             'long' => Yii::t('app', 'Long'),
-            'details' => Yii::t('app', 'Details'),
-            'cancelled' => Yii::t('app', 'Cancelled'),
-            'active' => Yii::t('app', 'Active'),
-            'createdAt' => Yii::t('app', 'Created At'),
-            'updatedAt' => Yii::t('app', 'Updated At'),
+            'details' => Yii::t('app', 'Detalles'),
+            'cancelled' => Yii::t('app', 'Cancelado'),
+            'active' => Yii::t('app', 'Activo'),
+            'createdAt' => Yii::t('app', 'Creado el'),
+            'updatedAt' => Yii::t('app', 'Editado el'),
         ];
     }
 }

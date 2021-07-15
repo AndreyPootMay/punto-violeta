@@ -86,4 +86,35 @@ AppAsset::register($this);
 </body>
 
 </html>
+<?php $this->registerJs('
+    let logLocation = (position) => {
+        let i = 0;
+        let latitude = position.coords.latitude ?? "";
+        let longitude = position.coords.longitude ?? "";
+
+        let gotoButtons = document.querySelectorAll(".goto-button");
+        gotoButtons.forEach(item => {
+            let itemHref = $(item).prop("href");
+            console.log(itemHref);
+            itemHref = `${itemHref}&latitude=${latitude}&longitude=${longitude}`;
+
+            $(item).attr("href", itemHref);
+            i++;
+        });
+
+        console.table({
+            message: `${i} botones con coordenadas!`
+        });
+    }
+
+    /**
+     * Log an error message
+     * @param  {Object} error The error details
+     */
+    let logError = (error) => {
+        console.warn(error);
+
+    }
+    navigator.geolocation.getCurrentPosition(logLocation, logError);
+') ?>
 <?php $this->endPage() ?>
