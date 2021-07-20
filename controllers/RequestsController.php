@@ -2,6 +2,7 @@
 
 namespace app\controllers;
 
+use app\models\GeneralSettings;
 use app\models\Requests;
 use app\models\search\RequestsSearch;
 use Yii;
@@ -80,12 +81,27 @@ class RequestsController extends Controller
         $model->long = $longitude;
         $model->loadDefaultValues();
 
-        if ($this->request->isPost) {
-            if ($model->load($this->request->post()) && $model->save()) {
+        if ($model->load(Yii::$app->request->post())) {
+            $transaction = Yii::$app->db->beginTransaction();
+            try {
+                $generalSettings = GeneralSettings::findOne(1);
+                $model->folio = $generalSettings->requests_folio;
+                if (!$model->save()) {
+                    $transaction->rollBack();
+
+                    return $this->redirect(Yii::$app->request->referrer);
+                }
+
+                $generalSettings->updateCounters(['requests_folio' => 1]);
+                $transaction->commit();
+
                 return $this->redirect(['view', 'id' => $model->id]);
+            } catch (\Throwable $th) {
+                $transaction->rollBack();
+                Yii::$app->session->setFlash('error', $th->getMessage());
+
+                return $this->redirect(Yii::$app->request->referrer);
             }
-        } else {
-            $model->loadDefaultValues();
         }
 
         return $this->render('create', [

@@ -40,13 +40,13 @@ class Requests extends \yii\db\ActiveRecord
             [
                 [
                     'safety_place_id', 'user_id', 'full_name', 'age_old', 'lat', 'long', 'details'
-                ], 'required'],
-            [['safety_place_id', 'user_id', 'cancelled', 'active'], 'integer'],
+                ], 'required'
+            ],
+            [['safety_place_id', 'user_id', 'folio', 'cancelled', 'active'], 'integer'],
             [['details'], 'string'],
             [['createdAt', 'updatedAt'], 'safe'],
             [['full_name'], 'string', 'max' => 150],
             [['age_old'], 'string', 'max' => 11],
-            [['folio'], 'string', 'max' => 20],
             [['lat', 'long'], 'string', 'max' => 100],
         ];
     }
@@ -71,5 +71,13 @@ class Requests extends \yii\db\ActiveRecord
             'createdAt' => Yii::t('app', 'Creado el'),
             'updatedAt' => Yii::t('app', 'Editado el'),
         ];
+    }
+
+    /**
+     * @return \yii\db\ActiveQuery
+     */
+    public function getSafetyPlace()
+    {
+        return $this->hasOne(SafetyPlaces::class, ['id' => 'safety_place_id']);
     }
 }

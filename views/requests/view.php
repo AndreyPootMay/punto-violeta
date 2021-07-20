@@ -6,43 +6,49 @@ use yii\widgets\DetailView;
 /* @var $this yii\web\View */
 /* @var $model app\models\Requests */
 
-$this->title = $model->id;
-$this->params['breadcrumbs'][] = ['label' => Yii::t('app', 'Requests'), 'url' => ['index']];
+$this->title = "Solicitud - {$model->folio}";
+$this->params['breadcrumbs'][] = ['label' => Yii::t('app', 'Solicitudes'), 'url' => ['index']];
 $this->params['breadcrumbs'][] = $this->title;
 \yii\web\YiiAsset::register($this);
 ?>
 <div class="requests-view">
 
-    <h1><?= Html::encode($this->title) ?></h1>
-
-    <p>
-        <?= Html::a(Yii::t('app', 'Update'), ['update', 'id' => $model->id], ['class' => 'btn btn-primary']) ?>
-        <?= Html::a(Yii::t('app', 'Delete'), ['delete', 'id' => $model->id], [
-            'class' => 'btn btn-danger',
-            'data' => [
-                'confirm' => Yii::t('app', 'Are you sure you want to delete this item?'),
-                'method' => 'post',
-            ],
+    <p class="btn-group">
+        <?= Html::a(Yii::t('app', 'Regresar'), ['/site/index'], [
+            'class' => 'btn btn-primary'
         ]) ?>
     </p>
-
-    <?= DetailView::widget([
-        'model' => $model,
-        'attributes' => [
-            'id',
-            'safety_place_id',
-            'user_id',
-            'full_name',
-            'age_old',
-            'folio',
-            'lat',
-            'long',
-            'details:ntext',
-            'cancelled',
-            'active',
-            'createdAt',
-            'updatedAt',
-        ],
-    ]) ?>
-
+    <div class="row">
+        <div class="col-md-6">
+            <?= $this->render('_singlemap', [
+                'lng' => $model->long,
+                'lat' => $model->lat,
+                'title' => $model->safetyPlace->address
+            ]) ?>
+        </div>
+        <div class="col-md-6">
+            <?= DetailView::widget([
+                'model' => $model,
+                'attributes' => [
+                    'folio',
+                    [
+                        'attribute' => 'safety_place_id',
+                        'label' => Yii::t('app', 'Lugar solicitado'),
+                        'value' => function ($model) {
+                            return $model->safetyPlace->name ?? Yii::t('app', 'N/A');
+                        }
+                    ],
+                    'full_name',
+                    'age_old',
+                    'details:ntext',
+                    'cancelled:boolean',
+                    'active:boolean',
+                    [
+                        'attribute' => 'createdAt',
+                        'format' => 'date',
+                    ],
+                ],
+            ]) ?>
+        </div>
+    </div>
 </div>
